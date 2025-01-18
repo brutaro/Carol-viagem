@@ -94,6 +94,10 @@
         .value-cell {
             text-align: right;
         }
+
+        .paid-by-debora {
+            background-color: #fff3e0;
+        }
     </style>
 </head>
 <body>
@@ -123,6 +127,7 @@
                         <th>Categoria</th>
                         <th>Descrição</th>
                         <th>Valor</th>
+                        <th>Pago por</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -132,16 +137,17 @@
 
     <script>
         const expenses = [
-            { date: '17/02/2024', category: 'Alimentação', description: 'Lanche na estrada', value: 73.50 },
-            { date: '17/02/2024', category: 'Alimentação', description: 'Água', value: 4.00 },
-            { date: '18/02/2024', category: 'Alimentação', description: 'Restaurante', value: 13.00 },
-            { date: '18/02/2024', category: 'Alimentação', description: 'Lanche na estrada', value: 124.00 },
-            { date: '17/02/2024', category: 'Hotelaria', description: 'Hotel em Ipatinga', value: 354.00 },
-            { date: '17/02/2024', category: 'Outros', description: 'Gorjeta', value: 2.00 },
-            { date: '17/02/2024', category: 'Combustível', description: 'Combustível', value: 162.33 },
-            { date: '18/02/2024', category: 'Combustível', description: 'Combustível', value: 178.01 },
-            { date: '18/02/2024', category: 'Combustível', description: 'Combustível', value: 150.54 },
-            { date: '18/02/2024', category: 'Combustível', description: 'Combustível', value: 150.00 }
+            { date: '17/02/2024', category: 'Alimentação', description: 'Lanche na estrada', value: 73.50, paidBy: 'Carolina' },
+            { date: '17/02/2024', category: 'Alimentação', description: 'Água', value: 4.00, paidBy: 'Débora' },
+            { date: '18/02/2024', category: 'Alimentação', description: 'Restaurante', value: 13.00, paidBy: 'Carolina' },
+            { date: '18/02/2024', category: 'Alimentação', description: 'Lanche na estrada', value: 124.00, paidBy: 'Carolina' },
+            { date: '18/02/2024', category: 'Alimentação', description: 'Restaurante em Prado', value: 341.00, paidBy: 'Carolina' },
+            { date: '17/02/2024', category: 'Hotelaria', description: 'Hotel em Ipatinga', value: 354.00, paidBy: 'Débora' },
+            { date: '17/02/2024', category: 'Outros', description: 'Gorjeta', value: 2.00, paidBy: 'Carolina' },
+            { date: '17/02/2024', category: 'Combustível', description: 'Gasolina', value: 162.33, paidBy: 'Carolina' },
+            { date: '18/02/2024', category: 'Combustível', description: 'Gasolina', value: 178.01, paidBy: 'Carolina' },
+            { date: '18/02/2024', category: 'Combustível', description: 'Gasolina', value: 150.54, paidBy: 'Débora' },
+            { date: '18/02/2024', category: 'Combustível', description: 'Gasolina', value: 150.00, paidBy: 'Carolina' }
         ];
 
         const colors = {
@@ -224,12 +230,14 @@
 
         // Função para criar linha da tabela
         function createRow(expense) {
+            const isDebora = expense.paidBy === 'Débora';
             return `
-                <tr>
+                <tr class="${isDebora ? 'paid-by-debora' : ''}">
                     <td>${expense.date}</td>
                     <td>${expense.category}</td>
                     <td>${expense.description}</td>
                     <td class="value-cell">R$ ${expense.value.toFixed(2)}</td>
+                    <td>${expense.paidBy}</td>
                 </tr>
             `;
         }
@@ -247,6 +255,7 @@
             <tr class="total-row">
                 <td colspan="3">Subtotal (Exceto Combustível)</td>
                 <td class="value-cell">R$ ${nonFuelTotal.toFixed(2)}</td>
+                <td></td>
             </tr>
         `;
 
@@ -260,6 +269,7 @@
             <tr class="total-row">
                 <td colspan="3">Subtotal Combustível</td>
                 <td class="value-cell">R$ ${fuelTotal.toFixed(2)}</td>
+                <td></td>
             </tr>
         `;
 
@@ -268,6 +278,7 @@
             <tr class="total-row">
                 <td colspan="3"><strong>Total Geral</strong></td>
                 <td class="value-cell"><strong>R$ ${grandTotal.toFixed(2)}</strong></td>
+                <td></td>
             </tr>
         `;
 

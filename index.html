@@ -166,12 +166,12 @@
             <div class="summary-grid">
                 <div class="summary-item carolina">
                     <div>Total Carolina</div>
-                    <div class="summary-value">R$ 1.278,84</div>
+                    <div class="summary-value">R$ 1.398,84</div>
                     <div class="summary-label">(Exceto Outros Gastos)</div>
                 </div>
                 <div class="summary-item debora">
                     <div>Total Débora</div>
-                    <div class="summary-value">R$ 822,04</div>
+                    <div class="summary-value">R$ 1.125,36</div>
                     <div class="summary-label">(Exceto Outros Gastos)</div>
                 </div>
                 <div class="summary-item outros">
@@ -215,6 +215,7 @@
 
     <script>
         const expenses = [
+            // Alimentação
             { date: '17/01/2024', category: 'Alimentação', description: 'Lanche na estrada', value: 73.50, paidBy: 'Carolina' },
             { date: '17/01/2024', category: 'Alimentação', description: 'Água', value: 4.00, paidBy: 'Débora' },
             { date: '18/01/2024', category: 'Alimentação', description: 'Restaurante', value: 13.00, paidBy: 'Carolina' },
@@ -224,12 +225,20 @@
             { date: '19/01/2024', category: 'Alimentação', description: 'Bar da Praia', value: 269.50, paidBy: 'Débora' },
             { date: '19/01/2024', category: 'Alimentação', description: 'Picolé', value: 44.00, paidBy: 'Débora' },
             { date: '19/01/2024', category: 'Alimentação', description: 'Pastel', value: 153.00, paidBy: 'Carolina' },
+            { date: '20/01/2024', category: 'Alimentação', description: 'Supermercado', value: 174.32, paidBy: 'Débora' },
+            { date: '20/01/2024', category: 'Alimentação', description: 'Barraca da Praia', value: 129.00, paidBy: 'Débora' },
+            { date: '20/01/2024', category: 'Alimentação', description: 'Sorvete', value: 70.00, paidBy: 'Carolina' },
+            // Hotelaria
             { date: '17/01/2024', category: 'Hotelaria', description: 'Hotel em Ipatinga', value: 354.00, paidBy: 'Débora' },
+            // Fofura
+            { date: '20/01/2024', category: 'Fofura', description: 'Presente de Aniversário', value: 50.00, paidBy: 'Carolina' },
+            // Combustível
             { date: '17/01/2024', category: 'Combustível', description: 'Gasolina', value: 162.33, paidBy: 'Carolina' },
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 178.01, paidBy: 'Carolina' },
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 150.54, paidBy: 'Débora' },
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 150.00, paidBy: 'Carolina' },
             { date: '17/01/2024', category: 'Combustível', description: 'Gorjeta', value: 2.00, paidBy: 'Carolina' },
+            // Outros Gastos
             { date: '20/01/2024', category: 'Outros Gastos', description: 'Cera Depilação', value: 28.00, paidBy: 'Carolina' },
             { date: '20/01/2024', category: 'Outros Gastos', description: 'Prancha', value: 110.00, paidBy: 'Carolina' }
         ];
@@ -238,10 +247,10 @@
             'Alimentação': '#FFD93D',
             'Hotelaria': '#95D5B2',
             'Combustível': '#FF9B9B',
+            'Fofura': '#FF99CC',
             'Outros Gastos': '#8DB3E2'
         };
 
-        // Aguardar o DOM estar completamente carregado
         document.addEventListener('DOMContentLoaded', function() {
             // Calcular totais por categoria
             const categoryTotals = expenses.reduce((acc, curr) => {

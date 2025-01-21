@@ -136,7 +136,7 @@
             background-color: #fff3e0;
         }
 
-        .summary-item.outros {
+        .summary-item.outras {
             background-color: #8DB3E2;
             color: white;
         }
@@ -167,15 +167,15 @@
                 <div class="summary-item carolina">
                     <div>Total Carolina</div>
                     <div class="summary-value">R$ 1.398,84</div>
-                    <div class="summary-label">(Exceto Outros Gastos)</div>
+                    <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item debora">
                     <div>Total Débora</div>
-                    <div class="summary-value">R$ 1.125,36</div>
-                    <div class="summary-label">(Exceto Outros Gastos)</div>
+                    <div class="summary-value">R$ 1.172,36</div>
+                    <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
-                <div class="summary-item outros">
-                    <div>Outros Gastos</div>
+                <div class="summary-item outras">
+                    <div>Outras Despesas</div>
                     <div class="summary-value">R$ 138,00</div>
                 </div>
             </div>
@@ -183,13 +183,13 @@
 
         <div class="charts-container">
             <div class="chart-card">
-                <h2>Gastos por Categoria</h2>
+                <h2>Despesas por Categoria</h2>
                 <div class="chart-wrapper">
                     <canvas id="barChart"></canvas>
                 </div>
             </div>
             <div class="chart-card">
-                <h2>Distribuição de Gastos</h2>
+                <h2>Distribuição de Despesas</h2>
                 <div class="chart-wrapper">
                     <canvas id="pieChart"></canvas>
                 </div>
@@ -212,7 +212,6 @@
             </table>
         </div>
     </div>
-
     <script>
         const expenses = [
             // Alimentação
@@ -228,6 +227,7 @@
             { date: '20/01/2024', category: 'Alimentação', description: 'Supermercado', value: 174.32, paidBy: 'Débora' },
             { date: '20/01/2024', category: 'Alimentação', description: 'Barraca da Praia', value: 129.00, paidBy: 'Débora' },
             { date: '20/01/2024', category: 'Alimentação', description: 'Sorvete', value: 70.00, paidBy: 'Carolina' },
+            { date: '21/01/2024', category: 'Alimentação', description: 'Sucos da Praia', value: 47.00, paidBy: 'Débora' },
             // Hotelaria
             { date: '17/01/2024', category: 'Hotelaria', description: 'Hotel em Ipatinga', value: 354.00, paidBy: 'Débora' },
             // Fofura
@@ -238,9 +238,9 @@
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 150.54, paidBy: 'Débora' },
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 150.00, paidBy: 'Carolina' },
             { date: '17/01/2024', category: 'Combustível', description: 'Gorjeta', value: 2.00, paidBy: 'Carolina' },
-            // Outros Gastos
-            { date: '20/01/2024', category: 'Outros Gastos', description: 'Cera Depilação', value: 28.00, paidBy: 'Carolina' },
-            { date: '20/01/2024', category: 'Outros Gastos', description: 'Prancha', value: 110.00, paidBy: 'Carolina' }
+            // Outras Despesas
+            { date: '20/01/2024', category: 'Outras Despesas', description: 'Cera Depilação', value: 28.00, paidBy: 'Carolina' },
+            { date: '20/01/2024', category: 'Outras Despesas', description: 'Prancha', value: 110.00, paidBy: 'Carolina' }
         ];
 
         const colors = {
@@ -248,7 +248,7 @@
             'Hotelaria': '#95D5B2',
             'Combustível': '#FF9B9B',
             'Fofura': '#FF99CC',
-            'Outros Gastos': '#8DB3E2'
+            'Outras Despesas': '#8DB3E2'
         };
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -315,9 +315,9 @@
             const tableBody = document.getElementById('tableBody');
             
             // Separar despesas por categoria
-            const regularExpenses = expenses.filter(e => !['Combustível', 'Outros Gastos'].includes(e.category));
+            const regularExpenses = expenses.filter(e => !['Combustível', 'Outras Despesas'].includes(e.category));
             const fuelExpenses = expenses.filter(e => e.category === 'Combustível');
-            const otherExpenses = expenses.filter(e => e.category === 'Outros Gastos');
+            const otherExpenses = expenses.filter(e => e.category === 'Outras Despesas');
 
             // Calcular totais
             const regularTotal = regularExpenses.reduce((acc, curr) => acc + curr.value, 0);
@@ -350,7 +350,7 @@
             // Subtotal regular
             tableHTML += `
                 <tr class="total-row">
-                    <td colspan="3">Subtotal (Exceto Combustível e Outros Gastos)</td>
+                    <td colspan="3">Subtotal (Exceto Combustível e Outras Despesas)</td>
                     <td class="value-cell">R$ ${regularTotal.toFixed(2)}</td>
                     <td></td>
                 </tr>
@@ -370,24 +370,24 @@
                 </tr>
             `;
 
-            // Total exceto outros gastos
+            // Total exceto outras despesas
             tableHTML += `
                 <tr class="total-row">
-                    <td colspan="3"><strong>Total (Exceto Outros Gastos)</strong></td>
+                    <td colspan="3"><strong>Total (Exceto Outras Despesas)</strong></td>
                     <td class="value-cell"><strong>R$ ${grandTotal.toFixed(2)}</strong></td>
                     <td></td>
                 </tr>
             `;
 
-            // Outros gastos
+            // Outras despesas
             otherExpenses.forEach(expense => {
                 tableHTML += createRow(expense);
             });
 
-            // Subtotal outros gastos
+            // Subtotal outras despesas
             tableHTML += `
                 <tr class="total-row">
-                    <td colspan="3">Subtotal Outros Gastos</td>
+                    <td colspan="3">Subtotal Outras Despesas</td>
                     <td class="value-cell">R$ ${otherTotal.toFixed(2)}</td>
                     <td></td>
                 </tr>

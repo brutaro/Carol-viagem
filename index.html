@@ -292,26 +292,27 @@
             });
 
             // Configurar e criar gráfico de pizza
-            const pieCtx = document.getElementById('pieChart').getContext('2d');
-            new Chart(pieCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(categoryTotals),
-                    datasets: [{
-                        data: Object.values(categoryTotals),
-                        backgroundColor: Object.keys(categoryTotals).map(cat => colors[cat])
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        }
-                    }
-                }
-            });
+            // Configurar e criar gráfico de pizza
+const pieCtx = document.getElementById('pieChart').getContext('2d');
+new Chart(pieCtx, {
+    type: 'doughnut',
+    data: {
+        labels: Object.keys(categoryTotals),
+        datasets: [{
+            data: Object.values(categoryTotals),
+            backgroundColor: Object.keys(categoryTotals).map(cat => colors[cat])
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right'
+            }
+        }
+    }
+});
 
             // Preencher tabela
             const tableBody = document.getElementById('tableBody');

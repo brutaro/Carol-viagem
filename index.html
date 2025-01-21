@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dashboard de despesas da viagem para Cumuruxatiba - Janeiro 2024">
     <title>Dashboard de Despesas - Viagem Cumuruxatiba</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <style>
@@ -162,22 +161,22 @@
             <p>Viagem para Cumuruxatiba - Janeiro 2024</p>
         </div>
 
-        <div class="summary-card" id="summaryCard">
+        <div class="summary-card">
             <h2>Resumo de Pagamentos</h2>
             <div class="summary-grid">
                 <div class="summary-item carolina">
                     <div>Total Carolina</div>
-                    <div class="summary-value" id="totalCarolina"></div>
+                    <div class="summary-value">R$ 1.448,84</div>
                     <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item debora">
                     <div>Total Débora</div>
-                    <div class="summary-value" id="totalDebora"></div>
+                    <div class="summary-value">R$ 1.278,36</div>
                     <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item outras">
                     <div>Outras Despesas</div>
-                    <div class="summary-value" id="totalOutras"></div>
+                    <div class="summary-value">R$ 138,00</div>
                 </div>
             </div>
         </div>
@@ -215,9 +214,7 @@
     </div>
 
     <script>
-        // Dados das despesas
         const expenses = [
-            // Alimentação
             { date: '17/01/2024', category: 'Alimentação', description: 'Lanche na estrada', value: 73.50, paidBy: 'Carolina' },
             { date: '17/01/2024', category: 'Alimentação', description: 'Água', value: 4.00, paidBy: 'Débora' },
             { date: '18/01/2024', category: 'Alimentação', description: 'Restaurante', value: 13.00, paidBy: 'Carolina' },
@@ -233,22 +230,17 @@
             { date: '21/01/2024', category: 'Alimentação', description: 'Sucos da Praia', value: 47.00, paidBy: 'Débora' },
             { date: '21/01/2024', category: 'Alimentação', description: 'Pastel na Praia', value: 106.00, paidBy: 'Débora' },
             { date: '21/01/2024', category: 'Alimentação', description: 'Coco na Praia', value: 50.00, paidBy: 'Carolina' },
-            // Hotelaria
             { date: '17/01/2024', category: 'Hotelaria', description: 'Hotel em Ipatinga', value: 354.00, paidBy: 'Débora' },
-            // Fofura
             { date: '20/01/2024', category: 'Fofura', description: 'Presente de Aniversário', value: 50.00, paidBy: 'Carolina' },
-            // Combustível
             { date: '17/01/2024', category: 'Combustível', description: 'Gasolina', value: 162.33, paidBy: 'Carolina' },
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 178.01, paidBy: 'Carolina' },
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 150.54, paidBy: 'Débora' },
             { date: '18/01/2024', category: 'Combustível', description: 'Gasolina', value: 150.00, paidBy: 'Carolina' },
             { date: '17/01/2024', category: 'Combustível', description: 'Gorjeta', value: 2.00, paidBy: 'Carolina' },
-            // Outras Despesas
             { date: '20/01/2024', category: 'Outras Despesas', description: 'Cera Depilação', value: 28.00, paidBy: 'Carolina' },
             { date: '20/01/2024', category: 'Outras Despesas', description: 'Prancha', value: 110.00, paidBy: 'Carolina' }
         ];
 
-        // Configurações
         const colors = {
             'Alimentação': '#FFD93D',
             'Hotelaria': '#95D5B2',
@@ -257,140 +249,130 @@
             'Outras Despesas': '#8DB3E2'
         };
 
-        // Funções auxiliares
-        const formatMoney = (value) => {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(value);
-        };
-
-        const calculateTotals = () => {
-            return expenses.reduce((acc, curr) => {
-                // Totais por categoria
-                acc.categories[curr.category] = (acc.categories[curr.category] || 0) + curr.value;
-                
-                // Totais por pessoa
-                if(curr.category !== 'Outras Despesas') {
-                    acc.people[curr.paidBy] = (acc.people[curr.paidBy] || 0) + curr.value;
-                } else {
-                    acc.outras += curr.value;
-                }
-                
-                return acc;
-            }, {
-                categories: {},
-                people: {},
-                outras: 0
-            });
-        };
-
-        // Inicialização do dashboard
-        document.addEventListener('DOMContentLoaded', () => {
-            const totals = calculateTotals();
-            
-            // Atualizar resumo
-            document.getElementById('totalCarolina').textContent = formatMoney(totals.people.Carolina || 0);
-            document.getElementById('totalDebora').textContent = formatMoney(totals.people.Débora || 0);
-            document.getElementById('totalOutras').textContent = formatMoney(totals.outras);
-
-            // Criar gráficos
-            const createChart = (type, elementId) => {
-                const ctx = document.getElementById(elementId).getContext('2d');
-                return new Chart(ctx, {
-                    type: type,
-                    data: {
-                        labels: Object.keys(totals.categories),
-                        datasets: [{
-                            data: Object.values(totals.categories),
-                            backgroundColor: Object.keys(totals.categories).map(cat => colors[cat]),
-                            borderRadius: type === 'bar' ? 5 : 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: type === 'doughnut' ? 'right' : 'top'
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: (context) => {
-                                        const value = context.parsed || context.raw;
-                                        return `${context.label}: ${formatMoney(value)}`;
-                                    }
-                                }
-                            }
-                        },
-                        scales: type === 'bar' ? {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    callback: value => formatMoney(value)
-                                }
-                            }
-                        } : {}
-                    }
-                });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Função para ordenação correta das datas
+            const parseDate = (dateStr) => {
+                const [day, month, year] = dateStr.split('/');
+                return new Date(year, month-1, day);
             };
 
-            // Inicializar gráficos
-            const barChart = createChart('bar', 'barChart');
-            const pieChart = createChart('doughnut', 'pieChart');
+            // Ordenar despesas por data
+            const sortedExpenses = [...expenses].sort((a, b) => 
+                parseDate(a.date) - parseDate(b.date)
+            );
 
-            // Preencher tabela
-            const tableBody = document.getElementById('tableBody');
-            let tableHTML = '';
-
-            const addExpenseRow = (expense) => {
-                return `
-                    <tr class="${expense.paidBy === 'Débora' ? 'paid-by-debora' : ''}">
-                        <td>${expense.date}</td>
-                        <td>${expense.category}</td>
-                        <td>${expense.description}</td>
-                        <td class="value-cell">${formatMoney(expense.value)}</td>
-                        <td>${expense.paidBy}</td>
-                    </tr>
-                `;
-            };
-
-            // Agrupar despesas
-            const groupedExpenses = expenses.reduce((acc, curr) => {
-                if(!acc[curr.category]) acc[curr.category] = [];
-                acc[curr.category].push(curr);
+            // Calcular totais por categoria
+            const categoryTotals = expenses.reduce((acc, curr) => {
+                acc[curr.category] = (acc[curr.category] || 0) + curr.value;
                 return acc;
             }, {});
 
-            // Construir tabela
-            Object.entries(groupedExpenses).forEach(([category, items]) => {
-                // Cabeçalho da categoria
-                tableHTML += `
-                    <tr class="category-header">
-                        <td colspan="5"><strong>${category}</strong></td>
-                    </tr>
-                `;
-
-                // Itens da categoria
-                items.forEach(item => tableHTML += addExpenseRow(item));
-
-                // Subtotal da categoria
-                const subtotal = items.reduce((sum, item) => sum + item.value, 0);
-                tableHTML += `
-                    <tr class="total-row">
-                        <td colspan="3">Subtotal ${category}</td>
-                        <td class="value-cell">${formatMoney(subtotal)}</td>
-                        <td></td>
-                    </tr>
-                `;
+            // Configurar e criar gráfico de barras
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(categoryTotals),
+                    datasets: [{
+                        data: Object.values(categoryTotals),
+                        backgroundColor: Object.keys(categoryTotals).map(cat => colors[cat]),
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: value => `R$ ${value.toFixed(2)}` }
+                        }
+                    }
+                }
             });
 
-            // Total geral
-            const totalGeral = expenses.reduce((sum, item) => sum + item.value, 0);
+            // Configurar e criar gráfico de pizza
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(categoryTotals),
+                    datasets: [{
+                        data: Object.values(categoryTotals),
+                        backgroundColor: Object.keys(categoryTotals).map(cat => colors[cat])
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right' } }
+                }
+            });
+
+            // Preencher tabela com dados ordenados
+            const tableBody = document.getElementById('tableBody');
+            const regularExpenses = sortedExpenses.filter(e => !['Combustível', 'Outras Despesas'].includes(e.category));
+            const fuelExpenses = sortedExpenses.filter(e => e.category === 'Combustível');
+            const otherExpenses = sortedExpenses.filter(e => e.category === 'Outras Despesas');
+
+            const regularTotal = regularExpenses.reduce((acc, curr) => acc + curr.value, 0);
+            const fuelTotal = fuelExpenses.reduce((acc, curr) => acc + curr.value, 0);
+            const otherTotal = otherExpenses.reduce((acc, curr) => acc + curr.value, 0);
+            const grandTotal = regularTotal + fuelTotal;
+
+            function createRow(expense) {
+                const isDebora = expense.paidBy === 'Débora';
+                return `
+                    <tr class="${isDebora ? 'paid-by-debora' : ''}">
+                        <td>${expense.date}</td>
+                        <td>${expense.category}</td>
+                        <td>${expense.description}</td>
+                        <td class="value-cell">R$ ${expense.value.toFixed(2)}</td>
+                        <td>${expense.paidBy}</td>
+                    </tr>
+                `;
+            }
+
+            let tableHTML = '';
+            
+            regularExpenses.forEach(expense => {
+                tableHTML += createRow(expense);
+            });
+
             tableHTML += `
                 <tr class="total-row">
-                    <td colspan="3"><strong>Total Geral</strong></td>
-                    <td class="value-cell"><strong>${formatMoney(totalGeral)}</strong></td>
+                    <td colspan="3">Subtotal (Exceto Combustível e Outras Despesas)</td>
+                    <td class="value-cell">R$ ${regularTotal.toFixed(2)}</td>
+                    <td></td>
+                </tr>
+            `;
+
+            fuelExpenses.forEach(expense => {
+                tableHTML += createRow(expense);
+            });
+
+            tableHTML += `
+                <tr class="total-row">
+                    <td colspan="3">Subtotal Combustível</td>
+                    <td class="value-cell">R$ ${fuelTotal.toFixed(2)}</td>
+                    <td></td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="3"><strong>Total (Exceto Outras Despesas)</strong></td>
+                    <td class="value-cell"><strong>R$ ${grandTotal.toFixed(2)}</strong></td>
+                    <td></td>
+                </tr>
+            `;
+
+            otherExpenses.forEach(expense => {
+                tableHTML += createRow(expense);
+            });
+
+            tableHTML += `
+                <tr class="total-row">
+                    <td colspan="3">Subtotal Outras Despesas</td>
+                    <td class="value-cell">R$ ${otherTotal.toFixed(2)}</td>
                     <td></td>
                 </tr>
             `;

@@ -6,7 +6,6 @@
     <title>Dashboard de Despesas - Viagem Cumuruxatiba</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <style>
-        /* Estilos originais preservados */
         * {
             margin: 0;
             padding: 0;
@@ -167,7 +166,7 @@
             <div class="summary-grid">
                 <div class="summary-item carolina">
                     <div>Total Carolina</div>
-                    <div class="summary-value">R$ 2.000,84</div>
+                    <div class="summary-value">R$ 2.493,04</div> <!-- Atualizado -->
                     <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item debora">
@@ -177,7 +176,7 @@
                 </div>
                 <div class="summary-item outras">
                     <div>Outras Despesas</div>
-                    <div class="summary-value">R$ 328,00</div> <!-- Atualizado -->
+                    <div class="summary-value">R$ 328,00</div>
                 </div>
             </div>
         </div>
@@ -215,7 +214,6 @@
     </div>
 
     <script>
-        // Dados completos e verificados
         const expenses = [
             { date: '17/01/2024', category: 'Alimentação', description: 'Lanche na estrada', value: 73.50, paidBy: 'Carolina' },
             { date: '17/01/2024', category: 'Alimentação', description: 'Água', value: 4.00, paidBy: 'Débora' },
@@ -242,14 +240,14 @@
             { date: '17/01/2024', category: 'Combustível', description: 'Gorjeta', value: 2.00, paidBy: 'Carolina' },
             { date: '20/01/2024', category: 'Outras Despesas', description: 'Cera Depilação', value: 28.00, paidBy: 'Carolina' },
             { date: '20/01/2024', category: 'Outras Despesas', description: 'Prancha', value: 110.00, paidBy: 'Carolina' },
-            // Novas despesas
             { date: '23/01/2024', category: 'Outras Despesas', description: 'Empada na praia', value: 60.00, paidBy: 'Carolina' },
             { date: '23/01/2024', category: 'Outras Despesas', description: 'Picolé', value: 30.00, paidBy: 'Carolina' },
-            { date: '23/01/2024', category: 'Outras Despesas', description: 'Academia', value: 100.00, paidBy: 'Carolina' }, <!-- Nova despesa -->
+            { date: '23/01/2024', category: 'Outras Despesas', description: 'Academia', value: 100.00, paidBy: 'Carolina' },
             { date: '23/01/2024', category: 'Alimentação', description: 'Supermercado', value: 136.00, paidBy: 'Carolina' },
             { date: '23/01/2024', category: 'Alimentação', description: 'Sacolão', value: 27.00, paidBy: 'Carolina' },
             { date: '23/01/2024', category: 'Alimentação', description: 'Feira', value: 20.00, paidBy: 'Carolina' },
-            { date: '23/01/2024', category: 'Alimentação', description: 'Abacaxi', value: 12.00, paidBy: 'Carolina' }
+            { date: '23/01/2024', category: 'Alimentação', description: 'Abacaxi', value: 12.00, paidBy: 'Carolina' },
+            { date: '23/01/2024', category: 'Alimentação', description: 'Barraca da Praia', value: 492.20, paidBy: 'Carolina' } <!-- Nova despesa -->
         ];
 
         const colors = {
@@ -278,7 +276,7 @@
                 return acc;
             }, {});
 
-            // Gráfico de barras
+            // Configurar e criar gráfico de barras
             const barCtx = document.getElementById('barChart').getContext('2d');
             new Chart(barCtx, {
                 type: 'bar',
@@ -303,7 +301,7 @@
                 }
             });
 
-            // Gráfico de pizza
+            // Configurar e criar gráfico de pizza
             const pieCtx = document.getElementById('pieChart').getContext('2d');
             new Chart(pieCtx, {
                 type: 'doughnut',
@@ -321,7 +319,7 @@
                 }
             });
 
-            // Preencher tabela
+            // Preencher tabela com dados ordenados
             const tableBody = document.getElementById('tableBody');
             const regularExpenses = sortedExpenses.filter(e => !['Combustível', 'Outras Despesas'].includes(e.category));
             const fuelExpenses = sortedExpenses.filter(e => e.category === 'Combustível');

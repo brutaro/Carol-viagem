@@ -6,6 +6,7 @@
     <title>Dashboard de Despesas - Viagem Cumuruxatiba</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <style>
+        /* Estilos originais preservados */
         * {
             margin: 0;
             padding: 0;
@@ -166,12 +167,12 @@
             <div class="summary-grid">
                 <div class="summary-item carolina">
                     <div>Total Carolina</div>
-                    <div class="summary-value">R$ 2.493,04</div> <!-- Atualizado -->
+                    <div class="summary-value">R$ 2.616,84</div> <!-- Atualizado -->
                     <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item debora">
                     <div>Total Débora</div>
-                    <div class="summary-value">R$ 1.278,36</div>
+                    <div class="summary-value">R$ 1.340,36</div> <!-- Atualizado -->
                     <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item outras">
@@ -247,7 +248,11 @@
             { date: '23/01/2024', category: 'Alimentação', description: 'Sacolão', value: 27.00, paidBy: 'Carolina' },
             { date: '23/01/2024', category: 'Alimentação', description: 'Feira', value: 20.00, paidBy: 'Carolina' },
             { date: '23/01/2024', category: 'Alimentação', description: 'Abacaxi', value: 12.00, paidBy: 'Carolina' },
-            { date: '23/01/2024', category: 'Alimentação', description: 'Barraca da Praia', value: 492.20, paidBy: 'Carolina' } <!-- Nova despesa -->
+            { date: '23/01/2024', category: 'Alimentação', description: 'Barraca da Praia', value: 492.20, paidBy: 'Carolina' },
+            // Novas despesas
+            { date: '24/01/2025', category: 'Alimentação', description: 'Praia', value: 19.80, paidBy: 'Carolina' },
+            { date: '24/01/2025', category: 'Alimentação', description: 'Bebidas para praia', value: 104.00, paidBy: 'Carolina' },
+            { date: '24/01/2025', category: 'Alimentação', description: 'Açaí', value: 62.00, paidBy: 'Débora' }
         ];
 
         const colors = {
@@ -276,7 +281,7 @@
                 return acc;
             }, {});
 
-            // Configurar e criar gráfico de barras
+            // Gráfico de barras
             const barCtx = document.getElementById('barChart').getContext('2d');
             new Chart(barCtx, {
                 type: 'bar',
@@ -301,7 +306,7 @@
                 }
             });
 
-            // Configurar e criar gráfico de pizza
+            // Gráfico de pizza
             const pieCtx = document.getElementById('pieChart').getContext('2d');
             new Chart(pieCtx, {
                 type: 'doughnut',
@@ -319,7 +324,7 @@
                 }
             });
 
-            // Preencher tabela com dados ordenados
+            // Preencher tabela
             const tableBody = document.getElementById('tableBody');
             const regularExpenses = sortedExpenses.filter(e => !['Combustível', 'Outras Despesas'].includes(e.category));
             const fuelExpenses = sortedExpenses.filter(e => e.category === 'Combustível');

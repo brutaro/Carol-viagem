@@ -6,7 +6,6 @@
     <title>Dashboard de Despesas - Viagem Cumuruxatiba</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <style>
-        /* Estilos originais preservados */
         * {
             margin: 0;
             padding: 0;
@@ -167,12 +166,12 @@
             <div class="summary-grid">
                 <div class="summary-item carolina">
                     <div>Total Carolina</div>
-                    <div class="summary-value">R$ 3.591,00</div> <!-- Atualizado -->
+                    <div class="summary-value">R$ 3.654,00</div>
                     <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item debora">
                     <div>Total Débora</div>
-                    <div class="summary-value">R$ 2.099,06</div> <!-- Atualizado -->
+                    <div class="summary-value">R$ 2.299,06</div>
                     <div class="summary-label">(Exceto Outras Despesas)</div>
                 </div>
                 <div class="summary-item outras">
@@ -233,7 +232,7 @@
             { date: '21/01/2025', category: 'Alimentação', description: 'Coco na Praia', value: 50.00, paidBy: 'Carolina' },
             { date: '22/01/2025', category: 'Alimentação', description: 'Almoço na praia', value: 357.00, paidBy: 'Carolina' },
             { date: '17/01/2025', category: 'Hotelaria', description: 'Hotel em Ipatinga', value: 354.00, paidBy: 'Débora' },
-            { date: '20/01/2025', category: 'Fofura', description: 'Presente de Aniversário', value: 50.00, paidBy: 'Carolina' },
+            { date: '20/01/2025', category: 'Presentes', description: 'Presente de Aniversário', value: 50.00, paidBy: 'Carolina' },
             { date: '17/01/2025', category: 'Combustível', description: 'Gasolina', value: 162.33, paidBy: 'Carolina' },
             { date: '18/01/2025', category: 'Combustível', description: 'Gasolina', value: 178.01, paidBy: 'Carolina' },
             { date: '18/01/2025', category: 'Combustível', description: 'Gasolina', value: 150.54, paidBy: 'Débora' },
@@ -259,39 +258,38 @@
             { date: '25/01/2025', category: 'Alimentação', description: 'Jantar', value: 440.00, paidBy: 'Débora' },
             { date: '25/01/2025', category: 'Alimentação', description: 'Sorvete', value: 47.90, paidBy: 'Carolina' },
             { date: '25/01/2025', category: 'Alimentação', description: 'Jantar', value: 340.00, paidBy: 'Carolina' },
-            // Novas despesas
             { date: '25/01/2025', category: 'Alimentação', description: 'Jantar', value: 194.70, paidBy: 'Débora' },
             { date: '25/01/2025', category: 'Alimentação', description: 'Almoço Corumbau', value: 377.00, paidBy: 'Carolina' },
-            { date: '25/01/2025', category: 'Alimentação', description: 'Sorvete', value: 63.00, paidBy: 'Carolina' }
+            { date: '25/01/2025', category: 'Alimentação', description: 'Sorvete', value: 63.00, paidBy: 'Carolina' },
+            // Novas despesas adicionadas
+            { date: '25/01/2025', category: 'Presentes', description: 'Presentes', value: 63.00, paidBy: 'Carolina' },
+            { date: '25/01/2025', category: 'Pagamentos', description: 'Pagamento Cátia', value: 200.00, paidBy: 'Débora' }
         ];
 
         const colors = {
             'Alimentação': '#FFD93D',
             'Hotelaria': '#95D5B2',
             'Combustível': '#FF9B9B',
-            'Fofura': '#FF99CC',
-            'Outras Despesas': '#8DB3E2'
+            'Presentes': '#FF99CC',
+            'Outras Despesas': '#8DB3E2',
+            'Pagamentos': '#A78BFA'
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Função para ordenação correta
             const parseDate = (dateStr) => {
                 const [day, month, year] = dateStr.split('/');
                 return new Date(year, month-1, day);
             };
 
-            // Ordenar despesas
             const sortedExpenses = [...expenses].sort((a, b) => 
                 parseDate(a.date) - parseDate(b.date)
             );
 
-            // Calcular totais
             const categoryTotals = expenses.reduce((acc, curr) => {
                 acc[curr.category] = (acc[curr.category] || 0) + curr.value;
                 return acc;
             }, {});
 
-            // Gráfico de barras
             const barCtx = document.getElementById('barChart').getContext('2d');
             new Chart(barCtx, {
                 type: 'bar',
@@ -316,7 +314,6 @@
                 }
             });
 
-            // Gráfico de pizza
             const pieCtx = document.getElementById('pieChart').getContext('2d');
             new Chart(pieCtx, {
                 type: 'doughnut',
@@ -334,7 +331,6 @@
                 }
             });
 
-            // Preencher tabela
             const tableBody = document.getElementById('tableBody');
             const regularExpenses = sortedExpenses.filter(e => !['Combustível', 'Outras Despesas'].includes(e.category));
             const fuelExpenses = sortedExpenses.filter(e => e.category === 'Combustível');
